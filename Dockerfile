@@ -1,5 +1,5 @@
 FROM eclipse-temurin:17-jdk-alpine
 VOLUME /var/lib/jenkins/workspace/test/target
 ARG springboot-aws.jar
-COPY ${springboot-aws.jar} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+COPY target/springboot-aws.jar message-server-1.0.0.jar
+ENTRYPOINT ["java","-jar","/message-server-1.0.0.jar"]
