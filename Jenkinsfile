@@ -14,7 +14,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'chmod 777 Dockerfile'
-                sh ' sudo docker build -t temp . '
+                sh 'docker build -t temp . '
             }
         }
     }
