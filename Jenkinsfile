@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'sudo docker build -t temp .'
+                sh ' sudo docker build -t temp . '
             }
         }
     }
