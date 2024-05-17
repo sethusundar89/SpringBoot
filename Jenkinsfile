@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo"deploy"
+                sh 'docker build -t temp .'
             }
         }
     }
