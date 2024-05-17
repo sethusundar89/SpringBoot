@@ -21,14 +21,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'chmod 777 Dockerfile'
-                sh 'docker build -t temp . '
+                sh 'docker build -t sundar . '
             }
         }
 
    stage('Deploy push image docker hub') { 
           steps { 
-                sh 'docker login -u srisundar89 -p SundarDoc89*'
-                sh 'docker push srisundar89/firstrepo:latest'
+                sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 058264508779.dkr.ecr.us-east-1.amazonaws.com'
+                sh 'docker tag sundar:latest 058264508779.dkr.ecr.us-east-1.amazonaws.com/sundar:latest'
+                sh 'docker push 058264508779.dkr.ecr.us-east-1.amazonaws.com/sundar:latest'
                 } 
             }
         } 
