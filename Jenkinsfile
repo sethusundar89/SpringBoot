@@ -28,7 +28,7 @@ pipeline {
    stage('Deploy push image docker hub') { 
           steps { 
                 sh 'docker login -u srisundar89 -p SundarDoc89*'
-                sh 'docker push srisundar89/srisundar89/firstrepo:temp'
+                sh 'docker push srisundar89/srisundar89/firstrepo:latest'
                 } 
             }
         } 
