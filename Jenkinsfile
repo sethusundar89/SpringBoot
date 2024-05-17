@@ -3,7 +3,7 @@ pipeline {
  stages {
         stage('checkout') { 
             steps { 
-                echo"code checkout"
+               checkout scmGit(branches: [[name: '*/test']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/sethusundar89/SpringBoot']])
             }
         }
         stage('build'){
