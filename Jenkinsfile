@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'docker build -t test'
+                sh 'docker build -t test .'
             }
         }
     }
