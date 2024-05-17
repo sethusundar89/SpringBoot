@@ -1,20 +1,19 @@
 pipeline {
-    agent any
-    tools{
-        maven 'maven_3_23_0'
-    }
-    stages{
-        stage('checkout'){
-            steps{
-                checkout scmGit(branches: [[name: '*/test']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/sethusundar89/SpringBoot']])
-               
+ stages {
+        stage('Build') { 
+            steps { 
+                sh 'make' 
             }
         }
-    }
-    stages{
-        stage('Build Maven'){
-            steps{
-                sh 'mvn clean install'
+        stage('Test'){
+            steps {
+                sh 'make check'
+                junit 'reports/**/*.xml' 
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'make publish'
             }
         }
     }
