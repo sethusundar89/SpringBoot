@@ -13,8 +13,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'sudo chown ubuntu Dockerfile'
-                sh 'sudo chgrp docker Dockerfile'
+                sh 'chmod 777 Docker'
                 sh ' sudo docker build -t temp . '
             }
         }
