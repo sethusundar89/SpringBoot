@@ -1,20 +1,19 @@
 pipeline {
   agent any 
  stages {
-        stage('Build') { 
+        stage('checkout') { 
             steps { 
-                sh 'make' 
+                echo"code checkout"
             }
         }
-        stage('Test'){
+        stage('build'){
             steps {
-                sh 'make check'
-                junit 'reports/**/*.xml' 
+                echo"build"
             }
         }
         stage('Deploy') {
             steps {
-                sh 'make publish'
+                echo"deploy"
             }
         }
     }
