@@ -1,41 +1,36 @@
 pipeline {
-  environment {
-    imagename = "srisundar89/firstrepo"
-    registryCredential = 'srisundar89'
-    dockerImage = ''
-  }
-  agent any
-  stages {
-    stage('Cloning Git') {
-      steps {
-       git branch: 'test', credentialsId: 'bd86bcc2-b03b-43d7-9c8f-48fcf9497114', url: 'https://github.com/sethusundar89/SpringBoot.git'
-
-      }
+  environment { 
+        registry = "srisundar89/firstrepo" 
+        registryCredential = 'srisundar89' 
+       //dockerImage = '' 
     }
-    stage('Building image') {
-      steps{
-        script {
-          dockerImage = docker.build temp
+  agent any 
+ stages {
+       
+        stage('checkout') { 
+            steps { 
+               //git credentialsId: 'bd86bcc2-b03b-43d7-9c8f-48fcf9497114', url: 'https://github.com/sethusundar89/SpringBoot'
+               git branch: 'test', credentialsId: 'bd86bcc2-b03b-43d7-9c8f-48fcf9497114', url: 'https://github.com/sethusundar89/SpringBoot.git'
+            }
         }
-      }
-    }
-    stage('Deploy Image') {
-      steps{
-        script {
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push("$BUILD_NUMBER")
-             dockerImage.push('latest')
-
-          }
+        stage('build'){
+            steps {
+                sh 'mvn clean install'
+            }
         }
-      }
-    }
-    stage('Remove Unused docker image') {
-      steps{
-        sh "docker rmi $imagename:$BUILD_NUMBER"
-         sh "docker rmi $imagename:latest"
+        stage('Deploy') {
+            steps {
+                sh 'chmod 777 Dockerfile'
+                sh 'docker build -t temp . '
+            }
+        }
 
-      }
+   stage('Deploy push image docker hub') { 
+          steps { 
+                sh 'docker login -u srisundar89 -p SundarDoc89*'
+                sh 'docker push srisundar89/srisundar89/firstrepo:temp'
+                } 
+            }
+        } 
     }
-  }
 }
