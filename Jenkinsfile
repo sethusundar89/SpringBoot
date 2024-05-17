@@ -1,4 +1,9 @@
 pipeline {
+  environment { 
+        registry = "srisundar89/firstrepo" 
+        registryCredential = 'srisundar89' 
+       dockerImage = '' 
+    }
   agent any 
  stages {
        
@@ -16,8 +21,18 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'chmod 777 Dockerfile'
-                sh 'docker build -t temp . '
+                dockerImage = sh 'docker build -t temp . '
             }
         }
+
+   stage('Deploy our image') { 
+          steps { 
+                script { 
+                    docker.withRegistry( '', registryCredential ) { 
+                        dockerImage.push() 
+                    }
+                } 
+            }
+        } 
     }
 }
